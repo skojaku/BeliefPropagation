@@ -8,7 +8,8 @@ from setuptools.command.build_py import build_py
 class Build(build_ext):
     """Customized setuptools build command - builds protos on build."""
     def run(self):
-        protoc_command = ["make", "python"]
+        protoc_command = ["make"]
+        #protoc_command = ["make", "python"]
         if subprocess.call(protoc_command) != 0:
             sys.exit(-1)
         super().run()
@@ -16,7 +17,7 @@ class Build(build_ext):
 class BuildPy(build_py):
      """Customized setuptools build command - builds protos on build."""
      def run(self):
-         protoc_command = ["make", "python"]
+         protoc_command = ["make"]
          if subprocess.call(protoc_command) != 0:
              sys.exit(-1)
          super().run()
@@ -31,6 +32,6 @@ setup(
     #    'build_ext': Build,
     #}
     cmdclass={
-        'build_py': BuildPy,
+        'build_ext': Build,
     }
 )
