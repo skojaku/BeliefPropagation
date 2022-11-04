@@ -22,8 +22,8 @@ def detect(A, q):
         nx.write_gml(G, graph_file_name)
         os.chdir(tmpdirname)
         os.system(
-            f"{root}/sbm learn -q {q} -l {graph_file_name} -w {output_file_name}"
-            #f"{root}/sbm learn -q {q} -l {graph_file_name} -w {output_file_name} >/dev/null"
+            #f"{root}/sbm learn -q {q} -l {graph_file_name} -w {output_file_name}"
+            f"{root}/sbm learn -q {q} -l {graph_file_name} -w {output_file_name} >/dev/null"
         )
         cids = pd.read_csv(output_file_name)["block"].values
         cids = np.unique(cids, return_inverse=True)[1]
