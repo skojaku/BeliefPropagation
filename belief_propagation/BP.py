@@ -42,4 +42,4 @@ def detect(A, q, params_sbm="", mute=True):
         cids = df["block"].values
         cids = np.unique(cids, return_inverse=True)[1]
 
-    return cids, df
+    return cids
