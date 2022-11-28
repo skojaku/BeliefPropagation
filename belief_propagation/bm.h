@@ -2,7 +2,7 @@
  * @Author: Sadamori Kojaku
  * @Date:   2022-11-02 13:02:40
  * @Last Modified by:   Sadamori Kojaku
- * @Last Modified time: 2022-11-03 21:07:16
+ * @Last Modified time: 2022-11-28 14:59:59
  */
 /*
  *   sbm version 1.1, release date 30/05/2012
@@ -97,7 +97,7 @@ public:
 	void graph_build_neis_inv();
 	void graph_read_graph(string);
 	void graph_write_gml(const char *);
-	void graph_write_csv(const char *);
+	void graph_write_csv(const char *, double);
 	void graph_write_spm(const char *);
 	void graph_write_A(const char *);
 	void graph_gen_graph(int, vector<double> , vector<double >);

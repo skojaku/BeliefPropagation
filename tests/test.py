@@ -2,7 +2,7 @@
 # @Author: Sadamori Kojaku
 # @Date:   2022-11-04 00:14:13
 # @Last Modified by:   Sadamori Kojaku
-# @Last Modified time: 2022-11-11 06:38:11
+# @Last Modified time: 2022-11-17 13:10:05
 # %%
 import belief_propagation
 import networkx as nx
@@ -15,7 +15,7 @@ A = nx.to_scipy_sparse_matrix(nx.karate_club_graph())
 # Detect communities
 # A: scipy sparse matrix. CSR format.
 # q: Number of communities
-community_ids = belief_propagation.detect(A, q=3)
+community_ids = belief_propagation.detect(A, q=4)
 print(community_ids)
 np.savez("result.npz", com=community_ids)
 

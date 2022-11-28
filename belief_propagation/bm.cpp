@@ -2,7 +2,7 @@
  * @Author: Sadamori Kojaku
  * @Date:   2022-11-02 13:02:40
  * @Last Modified by:   Sadamori Kojaku
- * @Last Modified time: 2022-11-03 21:13:40
+ * @Last Modified time: 2022-11-28 14:59:19
  */
 /*
  *   sbm version 1.1, release date 30/05/2012
@@ -299,13 +299,13 @@ void blockmodel:: graph_write_gml(const char *fname)
 	fout.close();
 	cout<<"done."<<endl;
 }
-void blockmodel:: graph_write_csv(const char *fname)
+void blockmodel:: graph_write_csv(const char *fname, double energy)
 {
 	ofstream fout(fname);
 	assert(fout.good() && "can not write to the file");
-	fout << "node_id" << "," << "block" << endl;
+	fout << "node_id" << "," << "block" <<","<< "energy" << endl;
 	for(int i=0;i<N;i++){
-		fout << i << "," << conf_infer[i] << endl;
+		fout << i << "," << conf_infer[i] << ","<<energy<<endl;
 	}
 	fout.close();
 }

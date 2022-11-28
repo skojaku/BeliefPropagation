@@ -2,7 +2,7 @@
  * @Author: Sadamori Kojaku
  * @Date:   2022-11-02 13:02:40
  * @Last Modified by:   Sadamori Kojaku
- * @Last Modified time: 2022-11-03 21:10:38
+ * @Last Modified time: 2022-11-28 14:58:20
  */
 /*
  *   sbm version 1.1, release date 30/05/2012
@@ -371,7 +371,8 @@ int main(int argc, char** argv)
 		bm.bm_show_na_cab();
 		if(!marginal_fname.empty()) bm.output_marginals(marginal_fname);
 		//bm.graph_write_gml(gml_fname.c_str()); // ADD BY AURELE
-		bm.graph_write_csv(gml_fname.c_str()); // ADD BY AURELE
+		double energy=bm.compute_argmax_energy();
+		bm.graph_write_csv(gml_fname.c_str(), energy); // ADD BY AURELE
 	}else if(function ==string("spc")){
 		assert(!lfname.empty());
 		bm.graph_read_graph(lfname);
