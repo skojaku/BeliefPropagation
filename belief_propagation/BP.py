@@ -51,8 +51,8 @@ def detect(A, q, iters=5, params_sbm="", mute=True):
         else:
             mute = ""
 
-        energy = 0
-
+        energy = np.inf
+        cids= np.zeros(A.shape[0], dtype=int)
         for _ in range(iters):
             os.system(
                 # f"{root}/sbm spc -q {q} -l {graph_file_name} -w {output_file_name} {params_sbm} >/dev/null"
