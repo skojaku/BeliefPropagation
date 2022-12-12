@@ -2,7 +2,7 @@
 # @Author: Sadamori Kojaku
 # @Date:   2022-11-02 13:34:28
 # @Last Modified by:   Sadamori Kojaku
-# @Last Modified time: 2022-12-11 21:24:57
+# @Last Modified time: 2022-12-11 21:28:12
 import os
 import pathlib
 import tempfile
@@ -23,6 +23,12 @@ def detect(
     :type q: int
     :param iters: Number of communication detections to run, defaults to 1. The best communities in terms of the free energy will be returned.
     :type iters: int, optional
+    :param p_init: p_init[i] is the fraction of the ith community. Set to uniform if not provided. Default to None.
+    :type p_init: numpy array or list.
+    :param cab_init: cab_init is the rescaled connectivity matrix, where cab[i,j] indicates the edge density x. Set to a diagonal matrix if not provided. Default to None.
+    :type cab_init: numpy array or list.
+    :param p_init: p_init[i] is the fraction of the ith community
+    :type p_init: numpy array or list.
     :param params_sbm: parameters to be passed to the original "sbm" program, defaults to "". See the author's code for the details.
     :type params_sbm: str, optional
     :param mute: mute = True to mute the verbose, defaults to True
