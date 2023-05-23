@@ -2,7 +2,7 @@
 # @Author: Sadamori Kojaku
 # @Date:   2022-11-02 13:34:28
 # @Last Modified by:   Sadamori Kojaku
-# @Last Modified time: 2022-12-12 06:34:45
+# @Last Modified time: 2023-05-23 05:31:38
 import os
 import pathlib
 import tempfile
@@ -13,31 +13,36 @@ import networkx as nx
 
 
 def detect(
-    A,
-    q,
-    iters=1,
-    init_memberships=None,
-    params_sbm="",
-    mute=True,
+    A, q, iters=1, dumping_rate=1.0, init_memberships=None, params_sbm="", mute=True
 ):
-    """Belief propagation
+    """
+    Perform belief propagation.
 
-    :param A: Adjacency matrix
-    :type A: sparse.csr_matrix
-    :param q: Number of communities
-    :type q: int
-    :param iters: Number of communication detections to run, defaults to 1. The best communities in terms of the free energy will be returned.
-    :type iters: int, optional
-    :param init_memberships: p_init and cab will be initialized by using the memberships.
-    :type init_memberships: numpy array or list.
-    :param p_init: p_init[i] is the fraction of the ith community
-    :type p_init: numpy array or list.
-    :param params_sbm: parameters to be passed to the original "sbm" program, defaults to "". See the author's code for the details.
-    :type params_sbm: str, optional
-    :param mute: mute = True to mute the verbose, defaults to True
-    :type mute: bool, optional
-    :return: numpy.ndarray
-    :rtype: an array of community memberships
+    Parameters
+    ----------
+    A : array_like or sparse matrix
+        The adjacency matrix of the graph to be clustered.
+    q : float
+        "Temperature" parameter for the clustering algorithm.
+    iters : int, optional (default: 1)
+        Number of iterations to run the clustering algorithm.
+    dumping_rate : float, optional (default: 1.0)
+        Damping rate for the belief propagation algorithm.
+    init_memberships : array_like, optional (default: None)
+        Initial cluster assignments for the nodes in the graph. If specified,
+        this must be a one-dimensional array-like object with length equal to
+        the number of nodes in the graph.
+    params_sbm : str, optional (default: "")
+        Additional command line arguments to pass to the SBM executable.
+    mute : bool, optional (default: True)
+        Whether to suppress standard output from the SBM executable.
+
+    Returns
+    -------
+    cids : ndarray
+        One-dimensional array of integers representing the cluster assignments
+        for the nodes in the input graph. The length of this array is equal to
+        the number of nodes in the graph.
     """
     if init_memberships is not None:
         n_nodes = A.shape[0]
@@ -59,9 +64,9 @@ def detect(
     A = sparse.csr_matrix(A)
     G = nx.from_scipy_sparse_array(A)
 
-    for (n1, n2, d) in G.edges(data=True):
+    for n1, n2, d in G.edges(data=True):
         d.clear()
-    for (n1, d) in G.nodes(data=True):
+    for n1, d in G.nodes(data=True):
         d.clear()
     with tempfile.TemporaryDirectory() as tmpdirname:
         root = pathlib.Path(__file__).parent.absolute()
@@ -86,7 +91,7 @@ def detect(
         cids = np.zeros(A.shape[0], dtype=int)
         for _ in range(iters):
             os.system(
-                f"{root}/sbm learn -q {q} -l {graph_file_name} -w {output_file_name} {params_sbm} {mute}"
+                f"{root}/sbm learn -q {q} -R {dumping_rate} -l {graph_file_name} -w {output_file_name} {params_sbm} {mute}"
             )
             df = pd.read_csv(output_file_name)
             energy_t = df["energy"].values[0]

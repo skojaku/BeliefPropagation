@@ -15,7 +15,7 @@ A = nx.to_scipy_sparse_matrix(nx.karate_club_graph())
 # Detect communities
 # A: scipy sparse matrix. CSR format.
 # q: Number of communities
-community_ids = belief_propagation.detect(A, q=2)
+community_ids = belief_propagation.detect(A, q=2, dumping_rate = 0.5)
 print(community_ids)
 np.savez("result.npz", com=community_ids)
 
