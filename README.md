@@ -35,6 +35,11 @@ A = nx.to_scipy_sparse_matrix(nx.karate_club_graph())
 community_ids = belief_propagation.detect(A, q=3) 
 ```
 
+# Note
+- Sensitivity to initial condition and remedies [my note](https://spontaneous-chebakia-5b4975.netlify.app/research-note/network-science/belief-propagation-algorithm/)
+
+
+
 
 
 
